@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle3D 🎨 - Turn Your Drawings Into 3D Toys!</title>
+    <meta name="description" content="A magical painting studio for children that turns 2D drawings into dancing 3D animated toys with googly eyes!">
+    
+    <!-- Google Fonts: Fredoka for a bubbly, playful child-friendly feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome for cute icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Playful Background Bubbles -->
+    <div class="bubble-bg">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Bubbly Header -->
+        <header class="app-header">
+            <h1 class="logo-title">
+                <span class="logo-paint">D</span>
+                <span class="logo-paint">o</span>
+                <span class="logo-paint">o</span>
+                <span class="logo-paint">d</span>
+                <span class="logo-paint">l</span>
+                <span class="logo-paint">e</span>
+                <span class="logo-3d">3D</span> 
+                <span class="sparkle-icon">✨</span>
+            </h1>
+            <p class="subtitle">Paint a picture, wave the magic wand, and watch it jump to life in 3D! 🪄</p>
+        </header>
+
+        <!-- Main Studio Workspace -->
+        <main class="studio-grid">
+            
+            <!-- Left Side: Drawing Studio -->
+            <section class="studio-card drawing-section" aria-label="Painting Canvas">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-palette"></i> Painting Studio</h2>
+                    <div class="canvas-actions">
+                        <button id="btn-undo" class="circle-btn mini-btn" title="Undo last stroke"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button id="btn-clear" class="circle-btn mini-btn danger-btn" title="Clear Canvas"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+                <!-- Drawing Canvas Area -->
+                <div class="canvas-wrapper">
+                    <canvas id="paint-canvas" width="500" height="500"></canvas>
+                    <div class="canvas-grid-overlay"></div>
+                </div>
+
+                <!-- Painting Tools -->
+                <div class="tools-container">
+                    <!-- Brush Selection -->
+                    <div class="tool-group">
+                        <span class="group-label">Brushes</span>
+                        <div class="brush-selector">
+                            <button id="brush-solid" class="brush-btn active" data-brush="solid" title="Magic Brush"><i class="fa-solid fa-paint-brush"></i><span>Solid</span></button>
+                            <button id="brush-rainbow" class="brush-btn" data-brush="rainbow" title="Rainbow Brush"><i class="fa-solid fa-rainbow"></i><span>Rainbow</span></button>
+                            <button id="brush-neon" class="brush-btn" data-brush="neon" title="Glow Brush"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Neon</span></button>
+                            <button id="brush-glitter" class="brush-btn" data-brush="glitter" title="Glitter Stars"><i class="fa-solid fa-star"></i><span>Glitter</span></button>
+                            <button id="brush-eraser" class="brush-btn" data-brush="eraser" title="Eraser"><i class="fa-solid fa-eraser"></i><span>Eraser</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Brush Size Slider -->
+                    <div class="tool-group">
+                        <div class="slider-label">
+                            <span>Brush Size</span>
+                            <span id="brush-size-val">15</span>
+                        </div>
+                        <input type="range" id="brush-size" min="5" max="50" value="15" class="cute-slider">
+                    </div>
+
+                    <!-- Color Picker Palette -->
+                    <div class="tool-group">
+                        <span class="group-label">Colors</span>
+                        <div class="color-palette" id="color-palette">
+                            <button class="color-swatch active" data-color="#ff5e7e" style="background-color: #ff5e7e;"></button>
+                            <button class="color-swatch" data-color="#ff9f43" style="background-color: #ff9f43;"></button>
+                            <button class="color-swatch" data-color="#feca57" style="background-color: #feca57;"></button>
+                            <button class="color-swatch" data-color="#1dd1a1" style="background-color: #1dd1a1;"></button>
+                            <button class="color-swatch" data-color="#10ac84" style="background-color: #10ac84;"></button>
+                            <button class="color-swatch" data-color="#00d2d3" style="background-color: #00d2d3;"></button>
+                            <button class="color-swatch" data-color="#54a0ff" style="background-color: #54a0ff;"></button>
+                            <button class="color-swatch" data-color="#5f27cd" style="background-color: #5f27cd;"></button>
+                            <button class="color-swatch" data-color="#ff9ff3" style="background-color: #ff9ff3;"></button>
+                            <button class="color-swatch" data-color="#2d3436" style="background-color: #2d3436;"></button>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="custom-color-picker" value="#ff5e7e">
+                                <label for="custom-color-picker" class="picker-label"><i class="fa-solid fa-eye-dropper"></i></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stamps / Stickers -->
+                    <div class="tool-group">
+                        <span class="group-label">Stickers (Click to Stamp!)</span>
+                        <div class="stamps-palette" id="stamps-palette">
+                            <button class="stamp-btn" data-stamp="heart" title="Heart Stamp">❤️</button>
+                            <button class="stamp-btn" data-stamp="star" title="Star Stamp">⭐</button>
+                            <button class="stamp-btn" data-stamp="smile" title="Smiley Stamp">😊</button>
+                            <button class="stamp-btn" data-stamp="crown" title="Crown Stamp">👑</button>
+                            <button class="stamp-btn" data-stamp="cat" title="Cat Stamp">🐱</button>
+                            <button class="stamp-btn" data-stamp="flower" title="Flower Stamp">🌸</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center: Magic Transformation Portal -->
+            <div class="portal-section">
+                <button id="btn-transform" class="magic-transform-btn" title="Transform drawing to 3D!">
+                    <div class="magic-sparkles">
+                        <span>✨</span><span>✨</span><span>✨</span>
+                    </div>
+                    <span class="magic-wand-icon">🪄</span>
+                    <span class="btn-text">Make 3D!</span>
+                </button>
+            </div>
+
+            <!-- Right Side: 3D Toy Playground -->
+            <section class="studio-card playground-section" aria-label="3D Viewport">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-gamepad"></i> 3D Toy Playground</h2>
+                    <div class="playground-actions">
+                        <button id="btn-dance" class="action-btn secondary-btn" title="Make them dance!"><i class="fa-solid fa-music"></i> Dance!</button>
+                        <button id="btn-clear-toys" class="action-btn danger-btn" title="Remove all toys"><i class="fa-solid fa-rotate"></i> Reset</button>
+                    </div>
+                </div>
+
+                <!-- 3D Viewport container -->
+                <div class="viewport-wrapper">
+                    <div id="threejs-canvas-container"></div>
+                    
+                    <!-- Loading overlay for transformation -->
+                    <div id="magic-loading-overlay" class="loading-overlay hidden">
+                        <div class="magic-spinner"></div>
+                        <p class="loading-text">Casting 3D Spell... 🪄✨</p>
+                    </div>
+                    
+                    <!-- Sound Toggle in 3D scene -->
+                    <button id="btn-sound-toggle" class="sound-toggle-btn" title="Toggle Sound"><i class="fa-solid fa-volume-high"></i></button>
+
+                    <!-- Toy controls popup -->
+                    <div class="toy-controls-hint">
+                        <p>🖱️ Left Click + Drag: Rotate | Right Click + Drag: Move | Scroll: Zoom</p>
+                        <p>👾 Click a toy to play with it!</p>
+                    </div>
+                </div>
+
+                <!-- Environment & Settings Selector -->
+                <div class="playground-settings">
+                    <div class="environment-selector">
+                        <span class="group-label">Choose Environment:</span>
+                        <div class="env-buttons">
+                            <button class="env-btn active" data-env="meadow"><i class="fa-solid fa-tree"></i> Meadow</button>
+                            <button class="env-btn" data-env="space"><i class="fa-solid fa-rocket"></i> Space</button>
+                            <button class="env-btn" data-env="ocean"><i class="fa-solid fa-fish"></i> Ocean</button>
+                            <button class="env-btn" data-env="candy"><i class="fa-solid fa-cookie-bite"></i> Candy Land</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Bottom: Toy Gallery -->
+        <footer class="gallery-section">
+            <h3 class="gallery-title"><i class="fa-solid fa-images"></i> My Toy Gallery</h3>
+            <div id="toy-gallery-list" class="gallery-list">
+                <!-- Dynamically populated card thumbnails -->
+                <p class="empty-gallery-msg">Draw and click the wand to build your collection! 🎁</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dialog for Speech / Sound Enable (required by Web Audio API autoplay rules) -->
+    <div id="welcome-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-emoji">🎨✨🪄</div>
+            <h2>Welcome to Doodle3D!</h2>
+            <p>Are you ready to create your own living 3D toys? Draw anything on the canvas, press the Magic Wand, and watch it pop into the 3D playground!</p>
+            <button id="btn-start" class="modal-start-btn">Let's Paint! 🚀</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Load Three.js core first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Load OrbitControls -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Load Custom Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
